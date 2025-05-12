@@ -1,0 +1,4 @@
+try_adam : 97/83
+try3     :88/83
+resnet_m_i_c: 91%/86%
+batch64  :98/85
