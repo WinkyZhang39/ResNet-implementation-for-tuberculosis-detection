@@ -1,0 +1,60 @@
+前期学习资料来源：
+1、https://blog.csdn.net/NAMELZX/article/details/118891788   # git 简易的命令行入门教程、常用命令
+2、https://www.cnblogs.com/dc-s/p/18857953   # Git 完整教程：初学者分步指南 
+3、DeepSeek
+4、【Git】Git 教程（三） —— SSH 方式链接 Git 与 GitHub（图文详解）_git ssh true-CSDN博客
+
+实践流程：
+1、	下载Git。从官网安装Git并按照指引完成勾选。
+2、	已经有Github账号，因此只用去创建一个个人仓库。
+3、	本地git准备：
+（1）、git config --global user.name "Your Name"
+git config --global user.email email@example.com
+在Git Bash中使用这两个命令创建自己的连接相关配置
+（2）、生成SSH key
+      ssh-keygen -t rsa -C youremail@example.com
+	  这里有个问题，使用rsa创建ssh密钥会有问题，可以选择
+ssh-keygen -t ed25519 -C xxxx@xxx.com区别在于协议
+输入这个命令后会弹出“Enter file in which to save the key”这样的，你可以选择给你的密钥文件重新命名，也可以直接回车使用默认的命名（id_ed25519或者id_rsa，在于你生成是选择的是、哪个命令）。之后会让我们给密钥添加密码，当然也可以不输入。
+（3）、查找生成的私钥和公钥
+前往C>user>username>.ssh文件夹里面找刚刚生成的密钥文件，复制公钥文件内容，私钥不要泄露。
+公钥就是带.pub结尾的文件，将.pub文件打开并将里面的内容全部复制。
+（4）、打开Github并找到settings，在左侧列表选择SSH and GPG keys，添加新的ssh key。给这个ssh连接命名，并将刚才复制的公钥全文复制到下方文本框内点击创建。创建后会发现shh的钥匙图标是灰色的，是因为本地还没有和github产生链接。
+（5）、找到自己想要管理的代码文件夹，并在git bash里面使用cd命令将文件路径指向这个文件夹。
+ 
+再输入git init命令将该文件夹变成Git可以管理的仓库。输入后文件夹内会出现一个.git隐藏文件夹.
+4、	建立本地和远程仓库的连接
+（1）、在git bash里面输入ssh -T git@github.com测试能否链接。只有返回“Hi XXX! You've successfully authenticated, but Gitee.com does not provide shell access.”才证明成功连接。
+（2）、git remote add origin https://github.com/WinkyZhang39 /test.git用于选择远程项目的地址，即GitHub上面你的仓库。
+5、根据需要对代码进行修改和提交
+git clone git@github.com:用户名/仓库名.git#克隆仓库
+
+git add #添加单个文件
+git add #添加多个文件：文件夹1/ 文件夹2/ ……多个文件夹之间空格隔开
+git add . #添加此目录下所有的文件
+
+git push -u origin master#第一次验证。（这里还要看bash里面路径之后的标记是main
+还是master，这是历史问题，是项目仓库的分支。如果本地分支和远程分支冲突，可以使用：git branch -m master main    # 将本地分支重命名为 main
+git push -u origin main      # 推送本地 main 到远程 main
+也可以使用git config --global init.defaultBranch main 修改全局的Git配置）
+
+git push git@github.com:___/___.git#添加到某个仓库
+
+git add README.md
+git commit -m "第一次提交：项目描述"
+git push
+
+git add hello.py#在本地文件夹内
+git commit -m "第二次提交：添加Python脚本"#注释
+git push
+
+git log --oneline  # 查看简洁提交历史
+git diff HEAD~1 HEAD  # 比较最近两次提交差异
+
+方式：
+git init 用git初始化当前目录
+touch README.md  新建一个README.md文件
+git add README.md 添加当前目录下的README.md文件到本地记录
+git commit -m "first commit" 提交到本地仓库
+git remote add origin https://gitee.com/namelzx/lab.git  填写远程项目的地址，即仓库的https://...地址（这一步可以不使用，如果在前面的git init之后指定了远程仓库，就会记录该文件夹指向的仓库）
+git push -u origin master推送到git仓库（此处加了-u 参数,以后即可直接用git push 代替）
